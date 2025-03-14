@@ -44,10 +44,43 @@ router.get('/view', (req, res) => {
   });
 });
 
+// // Route to delete the tasks
+router.delete('/delete', (req, res) => {
+
+  const { id } = req.body;
+  const deleteQuery = `DELETE FROM task WHERE task_id = ?`;
+
+  connection.query(deleteQuery, [id], (err, results) => {
+    if (err) {
+      console.error('Error deleting data:', err.stack);
+      res.status(500).send('Error deleting data');
+      return;
+    }
+    res.status(200).send({message:'Task deleted Suceesfully'});
+  });
+});
+
+// Rout to show the selected task
+router.post('/updateShow',(req,res)=>{
+  const{id}=req.body;
+  let querry=`SELECT * FROM task where task_id= ?`;
+
+  connection.query(querry,id,(err,result)=>{
+    if(err)
+    {
+      console.error('Error updating data:', err.stack);
+      res.status(500).send('Error updating data');
+      return;
+    }
+    res.status(200).json(result);
+  })
+
+})
+
 // Route to update the tasks
-router.put('/:id', (req, res) => {
-  const { id } = req.params;
-  const { task_owner, task_name, task_detail, start_date, end_date, reminder, priority, status } = req.body;
+router.put('/updatedata', (req, res) => {
+  // const { id } = req.params;
+  const { task_owner,id, task_name, task_detail, start_date, end_date, reminder, priority, status } = req.body;
   const updateQuery = `UPDATE task SET task_owner = ?, task_name = ?, task_detail = ?, start_date = ?, end_date = ?, reminder = ?, priority = ?, status = ? WHERE task_id = ?`;
   const taskData = [task_owner, task_name, task_detail, start_date, end_date, reminder, priority, status, id];
 
@@ -57,23 +90,9 @@ router.put('/:id', (req, res) => {
       res.status(500).send('Error updating data');
       return;
     }
-    res.status(200).send('Task updated successfully');
+    res.status(200).send({message:'Task Updated Suceesfully'});
   });
 });
 
-// // Route to delete the tasks
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-  const deleteQuery = `DELETE FROM task WHERE task_id = ?`;
-
-  connection.query(deleteQuery, [id], (err, results) => {
-    if (err) {
-      console.error('Error deleting data:', err.stack);
-      res.status(500).send('Error deleting data');
-      return;
-    }
-    res.status(200).send('Task deleted successfully');
-  });
-});
 
 module.exports = router;

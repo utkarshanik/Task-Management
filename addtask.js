@@ -1,6 +1,10 @@
-document.getElementById('taskForm').addEventListener('submit', function(event) {
+document.getElementById('taskForm').addEventListener('submit', async (event)=>{
   event.preventDefault();
+   AddData();
+} )
 
+export  async function AddData() {
+    
   const taskOwner = document.getElementById('inputtask').value;
   const taskName = document.getElementById('inputtaskname').value;
   const description = document.getElementById('desc').value;
@@ -9,6 +13,7 @@ document.getElementById('taskForm').addEventListener('submit', function(event) {
   const dueDate = document.getElementById('duedate').value;
   const priority = document.getElementById('inputpriority').value;
   const status = document.getElementById('inputstatus').value;
+  
   console.log(dueDate,priority,status,endDate,startDate)
 
   const taskData = {
@@ -23,18 +28,20 @@ document.getElementById('taskForm').addEventListener('submit', function(event) {
   };
 
   async function AddTask(taskData) {
-    
-  await fetch('http://localhost:5000/api/task/add', {
+let response= await fetch('http://localhost:5000/api/task/add', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(taskData)
   })
-  .then(response => response.json())
-  .then(data => {     
-    console.log('Success:', data);
-  })
+
+  let data = await response.json()
+  console.log('Success:', data);
+
 }
 AddTask(taskData)
-});
+}
+
+
+
