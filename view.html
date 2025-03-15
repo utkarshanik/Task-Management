@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <title>Document</title>
+  <title>View  Task</title>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Task Management</a>
+      <a class="navbar-brand" href="/index.html">Task Management</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -21,26 +21,21 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="view.html">View </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Delete </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Update </a>
-          </li>
         </ul>
-
         <form class="d-flex me-5">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
+          <input class="form-control me-2 searchbox" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success search" type="submit">Search</button>
         </form>
       </div>
     </div>
   </nav>
-
+ 
   <div class="container-fluid mt-3">
-      <h3 >All Task</h3>
+    <h3 >All Task</h3>
 
-      <div class="table-responsive">
+    <div class="p-2" id="liveAlertPlaceholderr"> </div>
+
+    <div class="table-responsive">
         <table class="table table-striped">
           <thead>
             <tr>
@@ -60,7 +55,7 @@
           <tbody class="showdata">
 
         </table>
-      </div>
+    </div>
   </div>
   
   <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" >
@@ -70,19 +65,23 @@
           <h1 class="modal-title fs-5" id="staticBackdropLabel">Update Task</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="p-2" id="liveAlertPlaceholder">
+
+        </div>
+        
         <div class="modal-body mt-3">
           <form class="" id="taskForm">
             <div class="row mb-3">
               <label for="inputtask" class="col-sm-2 col-form-label">Task Owner</label>
               <div class="col-sm-10">
-                <input   type="text" class="form-control" id="inputtask">
+                <input   type="text" class="form-control" id="inputtask" >
               </div>
             </div>
             
             <div class="row mb-3">
               <label for="inputtaskname" class="col-sm-2 col-form-label required">Task Name</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputtaskname">
+                <input type="text" class="form-control" id="inputtaskname" required>
               </div>
             </div>
             
@@ -130,19 +129,17 @@
             <div class="row mb-3">
               <label for="inputstatus" class="col-sm-2 col-form-label  ">Status</label>
               <div class="col-sm-10">
-                <select class="form-select" id="inputstatus" aria-label="Default select example">
-                  <option selected>Select option</option>
+                <select class="form-select" id="inputstatus" aria-label="Default select example required">
+                  <option value="">Select option</option>
                   <option value="Open">Open</option>
                   <option value="Close">Close</option>
                   <option value="In Progress">In Progress</option>
                 </select>
               </div>
             </div>
-          <!-- <button type="submit" class="btn btn-primary mt-5 sub ">Submit</button> -->
           <div class="modal-footer mt-3">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <!-- <button type="button" class="btn btn-primary">Understood</button> -->
-            <button type="submit" class="btn btn-primary  sub" data-bs-dismiss="modal">Submit</button>
+            <button type="submit" class="btn btn-primary  sub" >Submit</button>
           </div>
           </form>
         </div>
@@ -151,11 +148,6 @@
       </div>
     </div>
   </div>  
-  
-<!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Launch static backdrop modal
-</button> -->
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

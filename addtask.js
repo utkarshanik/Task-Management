@@ -1,10 +1,16 @@
 document.getElementById('taskForm').addEventListener('submit', async (event)=>{
   event.preventDefault();
-   AddData();
+  await AddData();
+  // await reloading();
 } )
 
-export  async function AddData() {
-    
+async function  reloading() {
+  setTimeout(() => {
+    location.reload()
+  }, 1500);
+}
+
+ async function AddData() {
   const taskOwner = document.getElementById('inputtask').value;
   const taskName = document.getElementById('inputtaskname').value;
   const description = document.getElementById('desc').value;
@@ -36,12 +42,44 @@ let response= await fetch('http://localhost:5000/api/task/add', {
     body: JSON.stringify(taskData)
   })
 
-  let data = await response.json()
-  console.log('Success:', data);
+  let data= await response.json()
+
+  if(data.error)
+  {
+    console.log(data.error);
+    document.querySelector('#liveAlertPlaceholder').innerHTML=`
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        ${data.error}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>`
+    reloading();
+  }
+  else
+  {
+    document.querySelector('#liveAlertPlaceholder').innerHTML=`
+       <div class="alert alert-info" role="alert">
+        ${data.message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>`
+    reloading();
+  }
 
 }
 AddTask(taskData)
 }
 
-
+(() => {
+  'use strict'
+const forms = document.querySelectorAll('.needs-validation')
+// Loop over them and prevent submission
+Array.from(forms).forEach(form => {
+  form.addEventListener('submit', event => {
+    if (!form.checkValidity()) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    form.classList.add('was-validated')
+  }, false)
+})
+})()
 

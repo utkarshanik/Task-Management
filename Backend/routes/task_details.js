@@ -7,7 +7,7 @@ router.use((req, res, next) => {
   connection.connect((err) => {
     if (err) {
       console.error('Error connecting to the database:', err.stack);
-      res.status(500).send('Database connection error');
+      res.status(500).send({error:'Database connection error'});
       return;
     }
     next();
@@ -24,27 +24,27 @@ router.post('/add', (req, res) => {
   connection.query(insertQuery, taskData, (err, results) => {
     if (err) {
       console.error('Error inserting data:', err.stack);
-      res.status(500).send({error:'Error inserting data'});
+      res.status(500).send({error:'Please Insert A Valid Data'});
       return;
     }
     res.status(201).send({message:'Task Added Suceesfully'});
   });
 });
 
-// Route to get all tasks
+// Route to View all tasks
 router.get('/view', (req, res) => {
   const selectQuery = 'SELECT * FROM task';
   connection.query(selectQuery, (err, results) => {
     if (err) {
       console.error('Error fetching data:', err.stack);
-      res.status(500).send('Error fetching data');
+      res.status(500).send({error:'Error In Fetching Data'});
       return;
     }
     res.status(200).json(results);
   });
 });
 
-// // Route to delete the tasks
+//Route to delete the tasks
 router.delete('/delete', (req, res) => {
 
   const { id } = req.body;
@@ -53,7 +53,7 @@ router.delete('/delete', (req, res) => {
   connection.query(deleteQuery, [id], (err, results) => {
     if (err) {
       console.error('Error deleting data:', err.stack);
-      res.status(500).send('Error deleting data');
+      res.status(500).send({error:'Error While Deleting data'});
       return;
     }
     res.status(200).send({message:'Task deleted Suceesfully'});
@@ -68,8 +68,8 @@ router.post('/updateShow',(req,res)=>{
   connection.query(querry,id,(err,result)=>{
     if(err)
     {
-      console.error('Error updating data:', err.stack);
-      res.status(500).send('Error updating data');
+      console.error('Error showing updating data:', err.stack);
+      res.status(500).send({error:'Error While Showing The Data'});
       return;
     }
     res.status(200).json(result);
@@ -87,7 +87,7 @@ router.put('/updatedata', (req, res) => {
   connection.query(updateQuery, taskData, (err, results) => {
     if (err) {
       console.error('Error updating data:', err.stack);
-      res.status(500).send('Error updating data');
+      res.status(500).send({error:'Error While Updating The Data'});
       return;
     }
     res.status(200).send({message:'Task Updated Suceesfully'});
